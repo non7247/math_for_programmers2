@@ -1,25 +1,28 @@
-#[derive(Debug, Clone)]
+use std::ops;
+
+#[derive(Debug, Copy, Clone)]
 struct Vec2 {
     x: f64,
     y: f64,
 }
 
-impl Vec2 {
-    fn add(&self, v2: &Vec2) -> Vec2 {
+impl ops::Add<Vec2> for Vec2 {
+    type Output = Self;
+
+    fn add(self, v2: Vec2) -> Self::Output {
         Vec2 { x: self.x + v2.x, y: self.y + v2.y }
     }
+}
 
-    fn scale(&self, scalar: f64) -> Vec2 {
+impl ops::Mul<f64> for Vec2 {
+    type Output = Self;
+
+    fn mul(self, scalar: f64) -> Self::Output {
         Vec2 { x: self.x * scalar, y: self.y * scalar }
     }
 }
 
 fn main() {
-    let v = Vec2 { x: 3.0, y: 4.0 };
-    let w = v.add(&Vec2 { x: -2.0, y: 6.0 });
-    println!("{:?}", w);
-
-    let v = Vec2 { x: 1.0, y: 1.0 };
-    let w = v.scale(50.0);
-    println!("{:?}", w);
+    let v = Vec2 { x: 1.0, y: 0.0 } * 3.0 + Vec2 { x: 0.0, y: 1.0 } * 4.0;
+    println!("{:?}", v);
 }
