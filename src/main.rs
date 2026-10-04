@@ -45,10 +45,19 @@ impl ops::Mul<f64> for Vec3 {
     }
 }
 
+fn average<T>(v1: &T, v2: &T) -> T
+where
+    T: Copy + ops::Add<Output = T> + ops::Mul<f64, Output = T>,
+{
+    *v1 * 0.5 + *v2 * 0.5
+}
+
 fn main() {
     let v = Vec2 { x: 1.0, y: 0.0 } * 3.0 + Vec2 { x: 0.0, y: 1.0 } * 4.0;
     println!("{:?}", v);
 
     let v = (Vec3 { x: 1.0, y: 0.0, z: 0.0 } + Vec3 { x: 0.0, y: 1.0, z: 0.0 }) * 2.0;
     println!("{:?}", v);
+
+    println!("{:?}", average(&Vec2 { x: 9.0, y: 1.0 }, &Vec2 { x: 8.0, y: 6.0 }));
 }
